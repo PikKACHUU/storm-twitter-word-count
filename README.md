@@ -21,7 +21,7 @@ storm jar target/storm-twitter-word-count-*.jar com.kaviddiss.storm.Topology
 ```
 * Run Topology.java with your twitter credentials as VM args (see http://twitter4j.org/en/configuration.html#systempropertyconfiguration)
 
-https://apps.twitter.com/app/new
+To get a new Twitter API key go to: https://apps.twitter.com/app/new and then place the credentials in the TwitterSampleSpout class
 
 You'll need to have valid Twitter OAuth credentials to get the sample working.
 For the exact steps on how to do that, visit https://dev.twitter.com/discussions/631.
