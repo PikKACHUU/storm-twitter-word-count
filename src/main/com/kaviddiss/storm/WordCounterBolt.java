@@ -1,10 +1,10 @@
 package com.kaviddiss.storm;
 
-import backtype.storm.task.OutputCollector;
-import backtype.storm.task.TopologyContext;
-import backtype.storm.topology.OutputFieldsDeclarer;
-import backtype.storm.topology.base.BaseRichBolt;
-import backtype.storm.tuple.Tuple;
+import org.apache.storm.task.OutputCollector;
+import org.apache.storm.task.TopologyContext;
+import org.apache.storm.topology.OutputFieldsDeclarer;
+import org.apache.storm.topology.base.BaseRichBolt;
+import org.apache.storm.tuple.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,21 +15,28 @@ import java.util.TreeMap;
 
 /**
  * Keeps stats on word count, calculates and logs top words every X second to stdout and top list every Y seconds,
+ *
  * @author davidk
  */
 public class WordCounterBolt extends BaseRichBolt {
 
-	private static final long serialVersionUID = 2706047697068872387L;
-	
-	private static final Logger logger = LoggerFactory.getLogger(WordCounterBolt.class);
-    
-	/** Number of seconds before the top list will be logged to stdout. */
+    private static final long serialVersionUID = 2706047697068872387L;
+
+    private static final Logger logger = LoggerFactory.getLogger(WordCounterBolt.class);
+
+    /**
+     * Number of seconds before the top list will be logged to stdout.
+     */
     private final long logIntervalSec;
-    
-    /** Number of seconds before the top list will be cleared. */
+
+    /**
+     * Number of seconds before the top list will be cleared.
+     */
     private final long clearIntervalSec;
-    
-    /** Number of top words to store in stats. */
+
+    /**
+     * Number of top words to store in stats.
+     */
     private final int topListSize;
 
     private Map<String, Long> counter;
@@ -42,7 +49,6 @@ public class WordCounterBolt extends BaseRichBolt {
         this.topListSize = topListSize;
     }
 
-    @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector collector) {
         counter = new HashMap<String, Long>();
         lastLogTime = System.currentTimeMillis();
@@ -65,8 +71,8 @@ public class WordCounterBolt extends BaseRichBolt {
         long now = System.currentTimeMillis();
         long logPeriodSec = (now - lastLogTime) / 1000;
         if (logPeriodSec > logIntervalSec) {
-        	logger.info("\n\n");
-        	logger.info("Word count: "+counter.size());
+            logger.info("\n\n");
+            logger.info("Word count: " + counter.size());
 
             publishTopList();
             lastLogTime = now;

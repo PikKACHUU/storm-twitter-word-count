@@ -1,0 +1,5 @@
+# rename this file to app.properties, and add your twitter API key
+twitter.ConsumerKey=xxxxxxxxxxxxx
+twitter.OAuthConsumerSecret=xxxxxxxxxxxxx
+twitter.OAuthAccessToken=xxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxx
+twitter.OAuthAccessTokenSecret=xxxxxxxxxxxxxxxxxxxxxxxxxx

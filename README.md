@@ -11,8 +11,17 @@ This project contains a simple storm topology that connects to the sample stream
 
 To get started:
 * Clone this repo
-* Import as existing Maven project in Eclipse
+* Import as existing Maven project in Eclipse/IntilliJ 
+
+To run the project:
+
+``` shell
+mvn clean install package 
+storm jar target/storm-twitter-word-count-*.jar com.kaviddiss.storm.Topology 
+```
 * Run Topology.java with your twitter credentials as VM args (see http://twitter4j.org/en/configuration.html#systempropertyconfiguration)
+
+https://apps.twitter.com/app/new
 
 You'll need to have valid Twitter OAuth credentials to get the sample working.
 For the exact steps on how to do that, visit https://dev.twitter.com/discussions/631.
