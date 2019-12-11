@@ -27,6 +27,10 @@ public class IgnoreWordsBolt extends BaseRichBolt {
             "about", "can", "was", "not", "your", "but", "are", "one", "what", "out", "when", "get", "lol", "now", "para", "por",
             "want", "will", "know", "good", "from", "las", "don", "people", "got", "why", "con", "time", "would",
     }));
+    private Set<String> LIST = new HashSet<String>(Arrays.asList(new String[]{
+            "green party", "conservative", "brexit" , "liberal",
+            "labour","green"
+    }));
     private OutputCollector collector;
 
     @Override
@@ -38,7 +42,7 @@ public class IgnoreWordsBolt extends BaseRichBolt {
     public void execute(Tuple input) {
         String lang = (String) input.getValueByField("lang");
         String word = (String) input.getValueByField("word");
-        if (!IGNORE_LIST.contains(word)) {
+        if (!IGNORE_LIST.contains(word)&& LIST.contains(word)) {
             collector.emit(new Values(lang, word));
         }
     }

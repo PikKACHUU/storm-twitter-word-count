@@ -2,16 +2,14 @@ package com.kaviddiss.storm;
 
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
+import org.apache.storm.topology.BasicOutputCollector;
 import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Keeps stats on word count, calculates and logs top words every X second to stdout and top list every Y seconds,
@@ -19,7 +17,10 @@ import java.util.TreeMap;
  * @author davidk
  */
 public class WordCounterBolt extends BaseRichBolt {
-
+    private Set<String> LIST = new HashSet<String>(Arrays.asList(new String[]{
+            "green party", "conservative", "labout", "brexit" , "liberal", "democrats",
+            "labour","party"
+    }));
     private static final long serialVersionUID = 2706047697068872387L;
 
     private static final Logger logger = LoggerFactory.getLogger(WordCounterBolt.class);
@@ -63,17 +64,16 @@ public class WordCounterBolt extends BaseRichBolt {
     public void execute(Tuple input) {
         String word = (String) input.getValueByField("word");
         Long count = counter.get(word);
-        count = count == null ? 1L : count + 1;
+        if(count == null)
+            count = 1l;
+        count++;
         counter.put(word, count);
-
-//        logger.info(new StringBuilder(word).append('>').append(count).toString());
 
         long now = System.currentTimeMillis();
         long logPeriodSec = (now - lastLogTime) / 1000;
         if (logPeriodSec > logIntervalSec) {
             logger.info("\n\n");
             logger.info("Word count: " + counter.size());
-
             publishTopList();
             lastLogTime = now;
         }
