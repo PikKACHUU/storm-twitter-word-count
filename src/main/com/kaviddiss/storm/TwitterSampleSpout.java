@@ -66,14 +66,14 @@ public class TwitterSampleSpout extends BaseRichSpout {
         };
 
         // todo : read these keys from properties file
-        ConfigurationBuilder cb = new ConfigurationBuilder();
-        cb.setDebugEnabled(true)
-                .setOAuthConsumerKey("hvO0Ui65NmpXMq4anlxKQL2Uk")
-                .setOAuthConsumerSecret("usj9AeXCDPkGwtfdnoweeX0LXg8WcAbK1X5Dt49fZMmPcM6PH1")
-                .setOAuthAccessToken("828221276149915648-Zs9TCqSJBXXax3er04a3N6e2tk03dI4")
-                .setOAuthAccessTokenSecret("WuwKRfgO63GZ4XGTn9CzpJ7Cm6d0y4NZ1lnrT7aokuMoh");
+        ConfigurationBuilder builder = new ConfigurationBuilder();
+        builder.setDebugEnabled(true)
+                .setOAuthConsumerKey("sL5Qg4m5gspJJczIAVxqh9WIs")
+                .setOAuthConsumerSecret("tv0JPDNkVR9JPIebjMTwStJgbVMnstJqbIGlvu3uek67OTpqK7")
+                .setOAuthAccessToken("1200072445329321985-LdaIB4KeofAqzXDkjaHCdldk0dSSXf")
+                .setOAuthAccessTokenSecret("6lWhrIz8IngCk4Mj7zv5UaybZ2Gt8kKCgj4qUbPGlIgoQ");
 
-        TwitterStreamFactory factory = new TwitterStreamFactory(cb.build());
+        TwitterStreamFactory factory = new TwitterStreamFactory(builder.build());
         twitterStream = factory.getInstance();
         twitterStream.addListener(listener);
         twitterStream.sample();
@@ -96,9 +96,9 @@ public class TwitterSampleSpout extends BaseRichSpout {
 
     @Override
     public Map<String, Object> getComponentConfiguration() {
-        Config ret = new Config();
-        ret.setMaxTaskParallelism(1);
-        return ret;
+        Config cfg = new Config();
+        cfg.setMaxTaskParallelism(1);
+        return cfg;
     }
 
     @Override

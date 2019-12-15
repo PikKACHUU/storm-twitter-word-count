@@ -22,14 +22,9 @@ public class IgnoreWordsBolt extends BaseRichBolt {
 
     private static final long serialVersionUID = 6069146554651714100L;
 
-    private Set<String> IGNORE_LIST = new HashSet<String>(Arrays.asList(new String[]{
-            "http", "https", "the", "you", "que", "and", "for", "that", "like", "have", "this", "just", "with", "all", "get",
-            "about", "can", "was", "not", "your", "but", "are", "one", "what", "out", "when", "get", "lol", "now", "para", "por",
-            "want", "will", "know", "good", "from", "las", "don", "people", "got", "why", "con", "time", "would",
-    }));
     private Set<String> LIST = new HashSet<String>(Arrays.asList(new String[]{
-            "green party", "conservative", "brexit" , "liberal",
-            "labour","green"
+             "conservative", "brexit" , "liberal",
+            "labour","green",
     }));
     private OutputCollector collector;
 
@@ -42,7 +37,8 @@ public class IgnoreWordsBolt extends BaseRichBolt {
     public void execute(Tuple input) {
         String lang = (String) input.getValueByField("lang");
         String word = (String) input.getValueByField("word");
-        if (!IGNORE_LIST.contains(word)&& LIST.contains(word)) {
+        //judge whether LIST contain the single string word , if it contains then OutputCollector emit one value
+        if ( LIST.contains(word)) {
             collector.emit(new Values(lang, word));
         }
     }
